@@ -13,31 +13,40 @@ object juego {
 		game.height(12)
 		game.boardGround("edificio.png")
 		game.title("Fire-Fighters")
-		game.cellSize(64)
-	
-		//Personajes
-		game.addVisualCharacter(bombero)
-		game.addVisual(rival)
-	
+		game.cellSize(60)
+		
 		//controles
 		keyboard.up().onPressDo({bombero.subir()})
 		keyboard.down().onPressDo({bombero.bajar()})
 		keyboard.left().onPressDo({bombero.izquierda()})
 		keyboard.right().onPressDo({bombero.derecha()})
-		keyboard.l().onPressDo({bombero.apagarVentana()})
+		keyboard.enter().onPressDo({bombero.apagarVentana()})
 	
-		//game.onTick(2000, "movimiento", { rival.movete() })
 	
 		game.start()	}
 		
 		method empezar(){
-		//game.sound("comienzo.mp3")
+		game.sound("comienzo.mp3")
 		if (not juegoIniciado){
 			game.removeVisual(pantallaDeInicio)
 			juegoIniciado = true
-			pantallaDeInicio.terminarAnimacion()	}
+			pantallaDeInicio.terminarAnimacion()
+			
+			personajesAparecen.rivalAtaca()
+			personajesAparecen.personajePrincipalAparece()
+			}
 		}
 }
+object personajesAparecen {
+	method rivalAtaca(){
+		game.addVisual(rival)
+		//game.onTick(2000, "movimiento", { rival.movete() })
+	}
+	method personajePrincipalAparece(){
+		game.addVisualCharacter(bombero)	
+	}
+}
+
 
 object pantallaDeInicio{
 	var imagen = false
