@@ -1,6 +1,9 @@
 import wollok.game.*
 import personajes.*
 
+import numeros.*
+
+
 object juego {
 	var juegoIniciado = false
 	method iniciar() {
@@ -13,6 +16,7 @@ object juego {
 		game.addVisualIn(pantallaDeInicio,game.at(0,0))
 		pantallaDeInicio.iniciarAnimacion()
 		keyboard.enter().onPressDo({self.empezar()})  
+		
 		game.start()
 	}
 	
@@ -21,18 +25,31 @@ object juego {
 		keyboard.down().onPressDo({bombero.bajar()})
 		keyboard.left().onPressDo({bombero.izquierda()})
 		keyboard.right().onPressDo({bombero.derecha()})
-		//keyboard.space().onPressDo({bombero.apagar()})
+		keyboard.space().onPressDo({bombero.lanzarAgua()})
+		
 		game.addVisual(bombero)
 		
 	}
 	
 	method empezar(){
+		
+	
+	
+		
 		game.sound("comienzo.mp3")
 		if (not juegoIniciado){
 			game.removeVisual(pantallaDeInicio)
 			juegoIniciado = true
 			self.bomberoControles()
 			pantallaDeInicio.terminarAnimacion()
+		game.addVisual(time)
+		game.addVisual(puntaje)
+		game.schedule(2000,{game.onTick(1000,"tiempo",{reloj.disminuir()})})
+		new Fuego().aparecer()
+		game.onCollideDo(bombero,{f=>bombero.sumarPuntaje() })
+		game.onCollideDo(bombero,{f=>game.removeVisual(f) })
+		//game.onCollideDo(
+	   
 		}
 		
 	}
@@ -40,6 +57,7 @@ object juego {
 	method forzarDesaparicionEn(pos){
 		game.getObjectsIn(pos).forEach{unObjeto=>unObjeto.forzarDesaparicion()}
 	}
+
 }
 
 
@@ -56,6 +74,7 @@ object mapa{
 			posProhibidas.add(game.at(12,k))			
 		}
 	}
+	
 }
 
 
@@ -73,10 +92,15 @@ object pantallaDeInicio{
 		else
 			imagen = true
 	}
+	
 	method image() {
 		if(imagen)
 			return "inicio.jpg"
 		else
 			return "inicio1.jpg"
 	}
+}
+class Agua{
+	var property image="agua.png"
+	var property position=bombero.position().right(1)
 }
