@@ -30,7 +30,9 @@ object bombero {
 	method seQuema() {
 		vidas--
 		if (vidas > 0) {
-			game.say(self,"Vidas restantes = " + vidas)
+			game.sound("Ouch!.mp3").play()
+			game.say(self,"Ouch! Me quedan = " + vidas + " vidas")
+			pantallaPierdeUnaVida.sePoneLaPantallaRoja()
 		} else {
 			fin.gameOver()
 		}
@@ -42,9 +44,7 @@ object bombero {
 		puntaje++
 	    new Puntaje(posUnidad = 4,posDecena=3).informarNumero(self.puntaje())
 	    if (puntaje==20) {
-	    	game.clear()
-	    	game.addVisual(bombero)
-	    	game.say(bombero," GANASTE ")
+	    	fin.youWin()
 	    }
 	}
 	

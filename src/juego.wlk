@@ -27,7 +27,6 @@ object juego {
 		pantallaDeInicio.iniciarAnimacion()
 		keyboard.enter().onPressDo({self.empezar()})
 		
-		game.start()
 	}
 	
 	method bomberoControles() {
@@ -54,7 +53,7 @@ object juego {
 			game.schedule(2000,{game.onTick(1000,"tiempo",{reloj.disminuir()})})
 			//new Fuego().aparecer()
 			
-			game.onTick(3000,"Aparece nuevo fuego",{new Fuego().aparecer()})
+			game.onTick(2000,"Aparece nuevo fuego",{new Fuego().aparecer()})
 			
 			game.onCollideDo(bombero,{f=>bombero.seQuema()})
 			game.onCollideDo(bombero,({f=>game.removeVisual(f)}))
@@ -95,24 +94,46 @@ object pantallaDeInicio {
 	
 	method image() {
 		if(imagen)
-			return "inicio.jpg"
+			return "inicio.png"
 		else
 			return "inicio1.jpg"
 	}
 }
 
+object pantallaPierdeUnaVida {
+	const property position= game.origin()
+	const property image= "fondoRojo.png"
+	
+	method sePoneLaPantallaRoja() {
+		game.addVisual(self)
+		game.schedule(250,{game.removeVisual(self)})
+	}
+	
+}
+
 //Revisar objeto /fin/, quizas se pueda remover y agregar el metodo /gameOver/ directamente al objeto juego
 object fin {
 	const property position=game.origin()
-	const property image= "gameOver.jpg"
+	var property image= "gameOver.png"
 	
 	method gameOver() {
 		self.position()
-		
+		game.sound("perder.mp3").play()
 		game.clear()
 		game.addVisual(self)
-		bombero.position(game.at(0,0))
+		bombero.position(game.at(6,2))
 		game.addVisual(bombero)
 		game.say(bombero,"Perdiste")
+	}
+	
+	method youWin() {
+		self.position()
+		image = "fondoGanador.png"
+		game.sound("ganó.mp3").play()
+		game.clear()
+		game.addVisual(self)
+		bombero.position(game.at(6,2))
+		game.addVisual(bombero)
+		game.say(bombero,"Ganaste!")
 	}
 }

@@ -20,6 +20,7 @@ object agua {
 	method aparecer(pos, dir) {
 		position = bombero.position().right(1)
 		game.addVisual(self)
+		game.sound("chorroAgua.mp3").play()
 		game.schedule(250,{game.removeVisual(self)})
 		self.manguerear()
 	}
@@ -46,7 +47,7 @@ class Fuego {
 }
 
 class Obstaculo {
-	var property image="enemigo.png"
+	var property image="stone.png"
 	var property position
 	
 	method mojarse() {}

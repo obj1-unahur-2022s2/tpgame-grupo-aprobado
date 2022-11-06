@@ -1,7 +1,8 @@
 import juego.*
+import wollok.game.*
 
-program abc {
+program fireFighters {
 
 	juego.iniciar()
-
+	game.start()
 }
