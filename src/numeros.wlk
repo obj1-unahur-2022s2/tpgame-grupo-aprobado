@@ -77,6 +77,7 @@ object time {
 	var property image="tiempo.png"
 	var property position=game.at(1,12)
 }
+
 object puntaje {
 	var property image="puntos.png"
 	var property position=game.at(1,0)

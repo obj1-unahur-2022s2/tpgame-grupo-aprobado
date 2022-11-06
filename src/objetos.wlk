@@ -11,7 +11,7 @@ class Agua {
 */
 
 object agua {
-	var property image="agua.png"
+	var property image="aguaHorizontal.png"
 	var property position
 	
 	method manguerear() {

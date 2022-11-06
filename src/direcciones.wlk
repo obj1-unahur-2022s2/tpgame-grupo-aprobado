@@ -2,7 +2,7 @@ import wollok.game.*
 
 object norte {
 	method esValida(pos) = pos.y() != 12
-	method imageAgua() = "aguaVertical.png"
+	method imageAgua() = "aguaArriba.png"
 	method aguaPosition(pos) = pos.up(1)
 	method imageBombero() = "bomberoNorte.png"
 	
@@ -10,7 +10,7 @@ object norte {
 
 object sur {
 	method esValida(pos) = pos.y() != 0
-	method imageAgua() = "aguaVertical.png"
+	method imageAgua() = "aguaAbajo.png"
 	method aguaPosition(pos) = pos.down(1)
 	method imageBombero() = "bomberoSur.png"
 	
@@ -18,7 +18,7 @@ object sur {
 
 object este {
 	method esValida(pos) = pos.x() != 12
-	method imageAgua() = "aguaHorizontal.png"
+	method imageAgua() = "aguaDerecha.png"
 	method aguaPosition(pos) = pos.right(1)
 	method imageBombero() = "bomberoEste.png"
 	
@@ -26,7 +26,7 @@ object este {
 
 object oeste {
 	method esValida(pos) = pos.x() != 0
-	method imageAgua() = "aguaHorizontal.png"
+	method imageAgua() = "aguaIzquierda.png"
 	method aguaPosition(pos) = pos.left(1)
 	method imageBombero() = "bomberoOeste.png"
 	

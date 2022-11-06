@@ -125,6 +125,7 @@ object fin {
 		bombero.image("bomberoSur.png")
 		game.addVisual(bombero)
 		game.say(bombero,"Perdiste")
+		
 	}
 	
 	method youWin() {
