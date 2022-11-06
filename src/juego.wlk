@@ -1,26 +1,36 @@
 import wollok.game.*
 import personajes.*
-
 import numeros.*
+import objetos.*
+import mapa.*
 
+/*
+ * Agregar contador de vidas
+ * Agregar metodos a "bombero" y "direcciones" para que el sprite del bombero cambie dependiendo de la direccion
+ * Corroborar que los objetos de la clase "Fuego" no aparezcan en un casillero ocupado por el jugador o por otro fuego
+ * 
+ * Esto ya es para mas adelante, pero estaria copado agregar un menu, accesible con la tecla "Esc" para salir del juego sin tener que cerrar la ventana
+ */
 
 object juego {
 	var juegoIniciado = false
+	var cantidadFuego = 0
+	
 	method iniciar() {
 		game.title("fire fighters")
 		game.width(13)
 		game.height(13)	
-		mapa.agregarPosiciones()
+		//mapa.agregarPosiciones()
 
 		game.boardGround("fondo.png")
 		game.addVisualIn(pantallaDeInicio,game.at(0,0))
 		pantallaDeInicio.iniciarAnimacion()
-		keyboard.enter().onPressDo({self.empezar()})  
+		keyboard.enter().onPressDo({self.empezar()})
 		
 		game.start()
 	}
 	
-	method bomberoControles(){
+	method bomberoControles() {
 		keyboard.up().onPressDo({bombero.subir()})
 		keyboard.down().onPressDo({bombero.bajar()})
 		keyboard.left().onPressDo({bombero.izquierda()})
@@ -32,61 +42,51 @@ object juego {
 	}
 	
 	method empezar(){
-		
-	
-	
-		
-		game.sound("comienzo.mp3")
-		if (not juegoIniciado){
+		if (not juegoIniciado) {
 			game.removeVisual(pantallaDeInicio)
 			juegoIniciado = true
 			self.bomberoControles()
 			pantallaDeInicio.terminarAnimacion()
-		game.addVisual(time)
-		game.addVisual(puntaje)
-		game.schedule(2000,{game.onTick(1000,"tiempo",{reloj.disminuir()})})
-		new Fuego().aparecer()
-		game.onCollideDo(bombero,{f=>bombero.sumarPuntaje() })
-		game.onCollideDo(bombero,{f=>game.removeVisual(f) })
-		//game.onCollideDo(
-	   
+			game.addVisual(time)
+			game.addVisual(puntaje)
+			mapa.agregarPosiciones()
+			mapa.posProhibidas().forEach({o=>game.addVisual(o)})
+			game.schedule(2000,{game.onTick(1000,"tiempo",{reloj.disminuir()})})
+			//new Fuego().aparecer()
+			
+			game.onTick(3000,"Aparece nuevo fuego",{new Fuego().aparecer()})
+			
+			game.onCollideDo(bombero,{f=>bombero.seQuema()})
+			game.onCollideDo(bombero,({f=>game.removeVisual(f)}))
+		//	game.sound("comienzo.mp3").play()
+		//	game.onCollideDo(
 		}
-		
 	}
 	
-	method forzarDesaparicionEn(pos){
+	method aumentarFuego() { cantidadFuego++ }
+	method disminuirFuego() { cantidadFuego-- }
+	method prendidoFuego() {
+		if (cantidadFuego == 5) {
+			fin.gameOver()
+		}
+	}
+	/*
+	method forzarDesaparicionEn(pos) {
 		game.getObjectsIn(pos).forEach{unObjeto=>unObjeto.forzarDesaparicion()}
 	}
-
+	*/
 }
 
-
-object mapa{
-	var posProhibidas = []
-
-	method esUnaPared(pos) = posProhibidas.contains(pos)
-	
-	method agregarPosiciones(){
-		11.times{k=>
-			posProhibidas.add(game.at(k,0))
-			posProhibidas.add(game.at(k,12))
-			posProhibidas.add(game.at(0,k))
-			posProhibidas.add(game.at(12,k))			
-		}
-	}
-	
-}
-
-
-object pantallaDeInicio{
+object pantallaDeInicio {
 	var imagen = false
-	method iniciarAnimacion(){
+	
+	method iniciarAnimacion() {
 		game.onTick(250,"Animacion del menu",{self.cambiar()})
 	}
-	method terminarAnimacion(){
+	method terminarAnimacion() {
 		game.removeTickEvent("Animacion del menu")
 	}
-	method cambiar(){
+	method cambiar() {
 		if(imagen)
 			imagen = false
 		else
@@ -100,7 +100,19 @@ object pantallaDeInicio{
 			return "inicio1.jpg"
 	}
 }
-class Agua{
-	var property image="agua.png"
-	var property position=bombero.position().right(1)
+
+//Revisar objeto /fin/, quizas se pueda remover y agregar el metodo /gameOver/ directamente al objeto juego
+object fin {
+	const property position=game.origin()
+	const property image= "gameOver.jpg"
+	
+	method gameOver() {
+		self.position()
+		
+		game.clear()
+		game.addVisual(self)
+		bombero.position(game.at(0,0))
+		game.addVisual(bombero)
+		game.say(bombero,"Perdiste")
+	}
 }
