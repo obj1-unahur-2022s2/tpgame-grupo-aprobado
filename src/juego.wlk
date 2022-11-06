@@ -53,7 +53,7 @@ object juego {
 			game.schedule(2000,{game.onTick(1000,"tiempo",{reloj.disminuir()})})
 			//new Fuego().aparecer()
 			
-			game.onTick(2000,"Aparece nuevo fuego",{new Fuego().aparecer()})
+			game.onTick(1500,"Aparece nuevo fuego",{new Fuego().aparecer()})
 			
 			game.onCollideDo(bombero,{f=>bombero.seQuema()})
 			game.onCollideDo(bombero,({f=>game.removeVisual(f)}))
@@ -106,7 +106,7 @@ object pantallaPierdeUnaVida {
 	
 	method sePoneLaPantallaRoja() {
 		game.addVisual(self)
-		game.schedule(250,{game.removeVisual(self)})
+		game.schedule(200,{game.removeVisual(self)})
 	}
 	
 }
@@ -122,6 +122,7 @@ object fin {
 		game.clear()
 		game.addVisual(self)
 		bombero.position(game.at(6,2))
+		bombero.image("bomberoSur.png")
 		game.addVisual(bombero)
 		game.say(bombero,"Perdiste")
 	}
@@ -133,6 +134,7 @@ object fin {
 		game.clear()
 		game.addVisual(self)
 		bombero.position(game.at(6,2))
+		bombero.image("bomberoSur.png")
 		game.addVisual(bombero)
 		game.say(bombero,"Ganaste!")
 	}

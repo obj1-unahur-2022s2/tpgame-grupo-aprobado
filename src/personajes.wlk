@@ -6,7 +6,7 @@ import objetos.*
 import mapa.*
 
 object bombero {
-	var property image = "bombero2.png"
+	var property image = "bomberoEste.png"
 	var property position = game.at(1,1)
 	var property jugadorVaGanando = true
 	var property puntaje=0
@@ -24,6 +24,7 @@ object bombero {
 		if(dir.esValida(pos) and not mapa.hayObstaculo(pos)) {
 			position = pos
 			direccion = dir
+			image = dir.imageBombero()
 		}
 	}
 	

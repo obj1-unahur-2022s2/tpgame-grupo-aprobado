@@ -12,13 +12,14 @@ class Agua {
 
 object agua {
 	var property image="agua.png"
-	var property position=bombero.position().right(1)
+	var property position
 	
 	method manguerear() {
 		game.onCollideDo(self,{fuego=>fuego.mojarse() })
 	}
 	method aparecer(pos, dir) {
-		position = bombero.position().right(1)
+		position = dir.aguaPosition(pos)
+		image = dir.imageAgua()
 		game.addVisual(self)
 		game.sound("chorroAgua.mp3").play()
 		game.schedule(250,{game.removeVisual(self)})
