@@ -36,7 +36,7 @@ object bombero {
 			game.say(self,"Ouch! Me quedan = " + vidas + " vidas")
 			pantallaPierdeUnaVida.sePoneLaPantallaRoja()
 		} else {
-			fin.gameOver()
+			gameOver.finalizar()
 		}
 	}
 
@@ -44,7 +44,7 @@ object bombero {
 		puntaje++
 	    new Puntaje(posUnidad = 4,posDecena=3).informarNumero(self.puntaje())
 	    if (puntaje==20) {
-	    	fin.youWin()
+	    	youWin.finalizar()
 	    }
 	}
 	

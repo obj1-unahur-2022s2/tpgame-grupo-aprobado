@@ -27,23 +27,22 @@ class Fuego {
 	var property image="fuego.png"
 	var property position
 	
-	method teAgarre()=game.removeVisual(self)
 	method aparecer() {
 		game.addVisual(self)
 		juego.aumentarFuego()
 		juego.prendidoFuego()
 	}
 	method mojarse() {
-		bombero.sumarPuntaje()
 		juego.disminuirFuego()
 		mapa.quitarFuego(self)
 		game.removeVisual(self)
+		bombero.sumarPuntaje()
 	}
 	method choca() {
-		bombero.seQuema()
 		juego.disminuirFuego()
 		mapa.quitarFuego(self)
 		game.removeVisual(self)
+		bombero.seQuema()
 	}
 }
 

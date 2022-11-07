@@ -53,10 +53,6 @@ class ElementoVisual {
 	method dibujarElemento() {
 		game.addVisual(self)
 	}
-	
-	method borrarElemento() {
-		game.removeVisual(self)
-	}
 }
 
 object reloj {
@@ -68,7 +64,7 @@ object reloj {
 	    new Numero(posUnidad = 4,posDecena=3).informarNumero(self.tiempo())
 	
 	    if (tiempo==0) {
-	    	fin.gameOver()
+	    	gameOver.finalizar()
 	    }
 	}
 }

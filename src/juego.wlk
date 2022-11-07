@@ -11,7 +11,7 @@ import mapa.*
  */
 
 object juego {
-	var juegoIniciado = false
+	//var juegoIniciado = false
 	var cantidadFuego = 0
 	
 	method iniciar() {
@@ -39,9 +39,9 @@ object juego {
 	}
 	
 	method empezar(){
-		if (not juegoIniciado) {
+		//if (not juegoIniciado) {
 			game.removeVisual(pantallaDeInicio)
-			juegoIniciado = true
+			//juegoIniciado = true
 			self.bomberoControles()
 			pantallaDeInicio.terminarAnimacion()
 			game.addVisual(time)
@@ -51,7 +51,7 @@ object juego {
 			game.schedule(1000,{game.onTick(1000,"tiempo",{reloj.disminuir()})})
 			game.schedule(1000, {game.onTick(1500,"Aparece nuevo fuego",{self.aparecerFuego()})})
 			game.onCollideDo(bombero,({obj=>obj.choca()}))
-		}
+		//}
 	}
 	
 	method aparecerFuego() {
@@ -67,7 +67,7 @@ object juego {
 	method disminuirFuego() { cantidadFuego-- }
 	method prendidoFuego() {
 		if (cantidadFuego == 5) {
-			fin.gameOver()
+			gameOver.finalizar()
 		}
 	}
 }
@@ -107,32 +107,35 @@ object pantallaPierdeUnaVida {
 	
 }
 
-object fin {
-	const property position=game.origin()
-	var property image= "gameOver.png"
+class Fin {
+	const property position = game.origin()
 	
-	method gameOver() {
+	method finalizar() {
 		self.position()
-		game.sound("perder.mp3").play()
 		game.clear()
 		game.addVisual(self)
 		bombero.position(game.at(6,2))
 		bombero.image("bomberoSur.png")
 		game.addVisual(bombero)
-		game.say(bombero,"Perdiste")
-		
+		self.musica()
+		self.mensajeBombero()
 	}
 	
-	method youWin() {
-		self.position()
-		image = "fondoGanador.png"
-		game.sound("ganó.mp3").play()
-		game.clear()
-		game.addVisual(self)
-		bombero.position(game.at(6,2))
-		bombero.image("bomberoSur.png")
-		game.addVisual(bombero)
-		game.say(bombero,"Ganaste!")
-	}
+	method musica()
+	method mensajeBombero()
+	method image()
+	
 }
 
+object gameOver inherits Fin {
+	
+	override method musica() {game.sound("perder.mp3").play()} 
+	override method mensajeBombero() {game.say(bombero,"Perdiste")} 
+	override method image() = "gameOver.png"
+}
+
+object youWin inherits Fin {
+	override method musica() {game.sound("ganó.mp3").play()} 
+	override method mensajeBombero() {game.say(bombero,"Ganaste!")} 
+	override method image() = "fondoGanador.png"
+}
