@@ -11,7 +11,6 @@ import mapa.*
  */
 
 object juego {
-	//var juegoIniciado = false
 	var cantidadFuego = 0
 	
 	method iniciar() {
@@ -39,9 +38,7 @@ object juego {
 	}
 	
 	method empezar(){
-		//if (not juegoIniciado) {
 			game.removeVisual(pantallaDeInicio)
-			//juegoIniciado = true
 			self.bomberoControles()
 			pantallaDeInicio.terminarAnimacion()
 			game.addVisual(time)
@@ -51,7 +48,6 @@ object juego {
 			game.schedule(1000,{game.onTick(1000,"tiempo",{reloj.disminuir()})})
 			game.schedule(1000, {game.onTick(1500,"Aparece nuevo fuego",{self.aparecerFuego()})})
 			game.onCollideDo(bombero,({obj=>obj.choca()}))
-		//}
 	}
 	
 	method aparecerFuego() {
