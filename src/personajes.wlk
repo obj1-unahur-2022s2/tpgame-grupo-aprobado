@@ -5,6 +5,7 @@ import direcciones.*
 import objetos.*
 import mapa.*
 
+
 object bombero {
 	var property image = "bomberoEste.png"
 	var property position = game.at(1,1)
@@ -27,7 +28,7 @@ object bombero {
 			image = dir.imageBombero()
 		}
 	}
-	
+	method mojarse() {}
 	method seQuema() {
 		vidas--
 		if (vidas > 0) {
@@ -37,8 +38,6 @@ object bombero {
 		} else {
 			fin.gameOver()
 		}
-		juego.disminuirFuego()
-		
 	}
 
 	method sumarPuntaje() {
@@ -51,7 +50,6 @@ object bombero {
 	
 	method puntaje() = puntaje
 	method lanzarAgua() {
-		//var aguas=[]
 		agua.aparecer(position, direccion)
 	}
 }

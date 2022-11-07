@@ -82,3 +82,4 @@ object puntaje {
 	var property image="puntos.png"
 	var property position=game.at(1,0)
 }
+

@@ -1,14 +1,8 @@
 import wollok.game.*
 import personajes.*
 import juego.*
+import mapa.*
 
-/*
-class Agua {
-	var property image="agua.png"
-	var property position=bombero.position().right(1)
-	
-}
-*/
 
 object agua {
 	var property image="aguaHorizontal.png"
@@ -25,14 +19,13 @@ object agua {
 		game.schedule(250,{game.removeVisual(self)})
 		self.manguerear()
 	}
+	method choca() {}
+	method mojarse() {}
 }
 
 class Fuego {
-	//Checkear que el fuego no aparezca en otro objeto
-	
-	//var property cantFuego=0
 	var property image="fuego.png"
-	var property position=game.at(1.randomUpTo(11),1.randomUpTo(11))
+	var property position
 	
 	method teAgarre()=game.removeVisual(self)
 	method aparecer() {
@@ -42,8 +35,15 @@ class Fuego {
 	}
 	method mojarse() {
 		bombero.sumarPuntaje()
-		game.removeVisual(self)
 		juego.disminuirFuego()
+		mapa.quitarFuego(self)
+		game.removeVisual(self)
+	}
+	method choca() {
+		bombero.seQuema()
+		juego.disminuirFuego()
+		mapa.quitarFuego(self)
+		game.removeVisual(self)
 	}
 }
 
@@ -51,6 +51,8 @@ class Obstaculo {
 	var property image="stone.png"
 	var property position
 	
+	method aparecer() {}
 	method mojarse() {}
-	
+	method choca() {}
 }
+

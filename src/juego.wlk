@@ -6,8 +6,6 @@ import mapa.*
 
 /*
  * Agregar contador de vidas
- * Agregar metodos a "bombero" y "direcciones" para que el sprite del bombero cambie dependiendo de la direccion
- * Corroborar que los objetos de la clase "Fuego" no aparezcan en un casillero ocupado por el jugador o por otro fuego
  * 
  * Esto ya es para mas adelante, pero estaria copado agregar un menu, accesible con la tecla "Esc" para salir del juego sin tener que cerrar la ventana
  */
@@ -19,8 +17,7 @@ object juego {
 	method iniciar() {
 		game.title("fire fighters")
 		game.width(13)
-		game.height(13)	
-		//mapa.agregarPosiciones()
+		game.height(13)
 
 		game.boardGround("fondo.png")
 		game.addVisualIn(pantallaDeInicio,game.at(0,0))
@@ -31,13 +28,14 @@ object juego {
 	
 	method bomberoControles() {
 		keyboard.up().onPressDo({bombero.subir()})
+		keyboard.w().onPressDo({bombero.subir()})
 		keyboard.down().onPressDo({bombero.bajar()})
+		keyboard.s().onPressDo({bombero.bajar()})
 		keyboard.left().onPressDo({bombero.izquierda()})
+		keyboard.a().onPressDo({bombero.izquierda()})
 		keyboard.right().onPressDo({bombero.derecha()})
+		keyboard.d().onPressDo({bombero.derecha()})
 		keyboard.space().onPressDo({bombero.lanzarAgua()})
-		
-		game.addVisual(bombero)
-		
 	}
 	
 	method empezar(){
@@ -49,19 +47,22 @@ object juego {
 			game.addVisual(time)
 			game.addVisual(puntaje)
 			mapa.agregarPosiciones()
-			mapa.posProhibidas().forEach({o=>game.addVisual(o)})
-			game.schedule(2000,{game.onTick(1000,"tiempo",{reloj.disminuir()})})
-			//new Fuego().aparecer()
-			
-			game.onTick(1500,"Aparece nuevo fuego",{new Fuego().aparecer()})
-			
-			game.onCollideDo(bombero,{f=>bombero.seQuema()})
-			game.onCollideDo(bombero,({f=>game.removeVisual(f)}))
-		//	game.sound("comienzo.mp3").play()
-		//	game.onCollideDo(
+			mapa.objetosEnMapa().forEach({o=>game.addVisual(o)})
+			game.schedule(1000,{game.onTick(1000,"tiempo",{reloj.disminuir()})})
+			game.schedule(1000, {game.onTick(1500,"Aparece nuevo fuego",{self.aparecerFuego()})})
+			game.onCollideDo(bombero,({obj=>obj.choca()}))
 		}
 	}
 	
+	method aparecerFuego() {
+		var pos = game.at(1.randomUpTo(12).truncate(0),1.randomUpTo(12).truncate(0))
+		if (not mapa.hayObstaculo(pos) and not mapa.hayFuego(pos)) {
+			mapa.agregarFuego(new Fuego(position = pos))
+			mapa.fuegosEnMapa().last().aparecer()
+		} else {
+			self.aparecerFuego()
+		}
+	}
 	method aumentarFuego() { cantidadFuego++ }
 	method disminuirFuego() { cantidadFuego-- }
 	method prendidoFuego() {
@@ -69,11 +70,6 @@ object juego {
 			fin.gameOver()
 		}
 	}
-	/*
-	method forzarDesaparicionEn(pos) {
-		game.getObjectsIn(pos).forEach{unObjeto=>unObjeto.forzarDesaparicion()}
-	}
-	*/
 }
 
 object pantallaDeInicio {
@@ -111,7 +107,6 @@ object pantallaPierdeUnaVida {
 	
 }
 
-//Revisar objeto /fin/, quizas se pueda remover y agregar el metodo /gameOver/ directamente al objeto juego
 object fin {
 	const property position=game.origin()
 	var property image= "gameOver.png"
@@ -140,3 +135,4 @@ object fin {
 		game.say(bombero,"Ganaste!")
 	}
 }
+
