@@ -1,4 +1,4 @@
-Fire Fighters
+###FireFighters :man: :fire_engine:
 
 ## Equipo de desarrollo
 
@@ -17,18 +17,27 @@ Fire Fighters
 
 ## Reglas de Juego / Instrucciones
 
-El jugador deberá sumar 20 puntos en 40 segundos para ganar la partida.
+El jugador deberá **sumar 20 puntos** en 40 segundos para ganar la partida.
+
 Cada fuego apagado sumará 1 punto.
+
 Al iniciar la partida el jugador tiene 3 vidas. En caso de tocar el fuego perderá una de ellas.
-Si el jugador pierde las 3 vidas o no logra sumar los 20 puntos antes de finalizar el conteo, perderá la partida.
+
+La partida se perderá cuando:
+ 
+	:fire: El jugador pierda las 3 vidas
+
+	:fire: No logre sumar los 20 puntos antes de finalizar el conteo
+
+	:fire: Se acumulen 5 fuegos en el tablero
 
 ## Comandos
 
-- Flechas/ WASD: Desplazamiento
-- Barra espaciadora: Tirar agua
+:fire: Flechas/ WASD: Desplazamiento
+:fire: Barra espaciadora: Tirar agua
 
 ## Otros
 
-- Objetos 1, Universidad UNAHUR
-- Versión de wollok
-- Una vez terminado, no tenemos problemas en que el repositorio sea público
+:fire: Objetos 1, Universidad UNAHUR
+:fire: Versión de wollok
+:fire: Una vez terminado, no tenemos problemas en que el repositorio sea público
