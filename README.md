@@ -1,4 +1,4 @@
-##FireFighters :man: :fire_engine:
+## FireFighters :man: :fire_engine:
 
 ## Equipo de desarrollo
 
@@ -25,11 +25,11 @@ Al iniciar la partida el jugador tiene 3 vidas. En caso de tocar el fuego perder
 
 La partida se perderá cuando:
  
-	- El jugador pierda :heart: :heart: :heart: vidas
+- El jugador pierda :heart: :heart: :heart: vidas
 
-	- No logre sumar los 20 puntos antes de finalizar el conteo
+- No logre sumar los 20 puntos antes de finalizar el conteo
 
-	- Se acumulen 5 :fire: en el tablero
+- Se acumulen 5 :fire: en el tablero
 
 ## Comandos
 
