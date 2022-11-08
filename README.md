@@ -1,4 +1,4 @@
-###FireFighters :man: :fire_engine:
+##FireFighters :man: :fire_engine:
 
 ## Equipo de desarrollo
 
@@ -25,19 +25,22 @@ Al iniciar la partida el jugador tiene 3 vidas. En caso de tocar el fuego perder
 
 La partida se perderá cuando:
  
-	:fire: El jugador pierda las 3 vidas
+	- El jugador pierda :heart: :heart: :heart: vidas
 
-	:fire: No logre sumar los 20 puntos antes de finalizar el conteo
+	- No logre sumar los 20 puntos antes de finalizar el conteo
 
-	:fire: Se acumulen 5 fuegos en el tablero
+	- Se acumulen 5 :fire: en el tablero
 
 ## Comandos
 
 :fire: Flechas/ WASD: Desplazamiento
+
 :fire: Barra espaciadora: Tirar agua
 
 ## Otros
 
 :fire: Objetos 1, Universidad UNAHUR
+
 :fire: Versión de wollok
+
 :fire: Una vez terminado, no tenemos problemas en que el repositorio sea público
