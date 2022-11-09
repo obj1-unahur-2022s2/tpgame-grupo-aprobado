@@ -131,7 +131,7 @@ object gameOver inherits Fin {
 	
 	override method musica() {game.sound("perder.mp3").play()} 
 	override method mensajeBombero() {game.say(bombero,"Perdiste")} 
-	override method image() = "gameOver.png"
+	override method image() = "GameOver.png"
 }
 
 object youWin inherits Fin {

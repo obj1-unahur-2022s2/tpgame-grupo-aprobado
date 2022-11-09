@@ -42,7 +42,7 @@ object bombero {
 
 	method sumarPuntaje() {
 		puntaje++
-	    new Puntaje(posUnidad = 4,posDecena=3).informarNumero(self.puntaje())
+	    new Numero(posUnidad = 4,posDecena=3,posY=0).informarNumero(self.puntaje())
 	    if (puntaje==20) {
 	    	youWin.finalizar()
 	    }

@@ -2,6 +2,7 @@ import wollok.game.*
 import personajes.*
 import juego.*
 import mapa.*
+import numeros.*
 
 
 object agua {
@@ -54,4 +55,26 @@ class Obstaculo {
 	method mojarse() {}
 	method choca() {}
 }
+object reloj {
+	  var property tiempo=40
+	 
+	  method disminuir() {
+	  	
+		tiempo=0.max(tiempo-1)
+	    new Numero(posUnidad = 4,posDecena=3,posY=12).informarNumero(self.tiempo())
+	
+	    if (tiempo==0) {
+	    	gameOver.finalizar()
+	    }
+	}
+}
 
+object time {
+	var property image="tiempo.png"
+	var property position=game.at(1,12)
+}
+
+object puntaje {
+	var property image="puntos.png"
+	var property position=game.at(1,0)
+}
