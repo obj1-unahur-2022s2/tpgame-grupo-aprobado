@@ -62,7 +62,9 @@ object reloj {
 	  	
 		tiempo=0.max(tiempo-1)
 	    new Numero(posUnidad = 4,posDecena=3,posY=12).informarNumero(self.tiempo())
-	
+		if (tiempo==35) {
+			mapa.agregarNuevosObstaculos()
+		}
 	    if (tiempo==0) {
 	    	gameOver.finalizar()
 	    }

@@ -3,16 +3,11 @@ import personajes.*
 import numeros.*
 import objetos.*
 import mapa.*
-
-/*
- * Agregar contador de vidas
- * 
- * Esto ya es para mas adelante, pero estaria copado agregar un menu, accesible con la tecla "Esc" para salir del juego sin tener que cerrar la ventana
- */
+import direcciones.*
 
 object juego {
-	var juegoIniciado = false
-	var cantidadFuego = 0
+	var property juegoIniciado = false
+	var property cantidadFuego = 0
 	
 	method iniciar() {
 		game.title("fire fighters")
@@ -46,11 +41,12 @@ object juego {
 			pantallaDeInicio.terminarAnimacion()
 			game.addVisual(time)
 			game.addVisual(puntaje)
-			mapa.agregarPosiciones()
+			mapa.agregarPosicionesIniciales()
 			mapa.objetosEnMapa().forEach({o=>game.addVisual(o)})
 			game.schedule(1000,{game.onTick(1000,"tiempo",{reloj.disminuir()})})
 			game.schedule(1000, {game.onTick(1500,"Aparece nuevo fuego",{self.aparecerFuego()})})
 			game.onCollideDo(bombero,({obj=>obj.choca()}))
+			gameOver.salirDelJuego()
 		}
 	}
 	
@@ -119,8 +115,25 @@ class Fin {
 		game.addVisual(bombero)
 		self.musica()
 		self.mensajeBombero()
+		self.salirDelJuego()
+		self.volverAlinicio()
 	}
 	
+	method salirDelJuego() {keyboard.q().onPressDo({game.stop()})}
+	method volverAlinicio() {keyboard.del().onPressDo({self.restartGame()})}
+	method restartGame() {
+		game.clear()
+		mapa.borrarTodo()
+		juego.juegoIniciado(false)
+		juego.cantidadFuego(0)
+		reloj.tiempo(40)
+		bombero.vidas(3)
+		bombero.position(game.at(1,1))
+		bombero.puntaje(0)
+		bombero.image("bomberoEste.png")
+		bombero.direccion(este)
+		juego.iniciar()
+		}
 	method musica()
 	method mensajeBombero()
 	method image()

@@ -9,10 +9,9 @@ import mapa.*
 object bombero {
 	var property image = "bomberoEste.png"
 	var property position = game.at(1,1)
-	var property jugadorVaGanando = true
 	var property puntaje=0
-	var vidas = 3
-	var direccion = este
+	var property vidas = 3
+	var property direccion = este
 	
 	
 	method posicion() = position
