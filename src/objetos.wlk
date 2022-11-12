@@ -58,13 +58,20 @@ class Obstaculo {
 	}
 	method mojarse() {}
 	method choca() {}
-	method expandir() {
+	method direccionRandom() {
 		var random = 0.randomUpTo(4).truncate(0)
 		var coordenadas
 		
 		if (random != 4) {
 			coordenadas = direcciones.get(random).direccionPosition(self.position())
-		} else { self.expandir() }
+		} else { self.direccionRandom() }
+		return coordenadas
+	}
+	method expandir() {
+		var coordenadas = self.direccionRandom()
+		if (mapa.hayObstaculo(coordenadas) or mapa.hayFuego(coordenadas)) {
+			self.expandir()
+		}
 		return coordenadas
 	}
 	method cambiarImagen() {

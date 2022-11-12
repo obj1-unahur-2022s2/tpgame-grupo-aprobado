@@ -109,16 +109,17 @@ object pantallaDeInicio {
 }
 
 object instrucciones {
-	var seMuestra = true
+	var property seMuestra = true
 	const property position = game.origin()
 	const property image = "instrucciones.jpg"
 	
 	method mostrarIntrucciones() {
-		if(seMuestra)
-			seMuestra = true
+		if(seMuestra) {
+			seMuestra = false
 			game.addVisual(self)
 			game.schedule(3000, { game.removeVisual(self)
 			juego.empezar()	})
+		}
 	}
 }
 
@@ -156,6 +157,7 @@ class Fin {
 		game.clear()
 		mapa.borrarTodo()
 		juego.juegoIniciado(false)
+		instrucciones.seMuestra(true)
 		juego.cantidadFuego(0)
 		reloj.tiempo(40)
 		bombero.vidas(3)
