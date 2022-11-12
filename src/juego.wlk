@@ -15,6 +15,7 @@ object juego {
 		game.height(13)
 
 		game.boardGround("fondo.png")
+		game.addVisual(pantallaPierdeUnaVida)
 		game.addVisualIn(pantallaDeInicio,game.at(0,0))
 		pantallaDeInicio.iniciarAnimacion()
 		keyboard.enter().onPressDo({instrucciones.mostrarIntrucciones()})
@@ -45,8 +46,14 @@ object juego {
 			mapa.objetosEnMapa().forEach({o=>game.addVisual(o)})
 			game.schedule(1000,{game.onTick(1000,"tiempo",{reloj.disminuir()})})
 			game.schedule(1000, {game.onTick(1500,"Aparece nuevo fuego",{self.aparecerFuego()})})
+			/*
+			 * El onTick de abajo no es para nada importante, solo vuelve a agregar la imagen del bombero para que la imagen de los fuegos
+			 * y obstaculos nuevos no queden por encima de la imagen del bombero, se puede sacar tranquilamente
+			 */
+			game.onTick(1000, "", {game.removeVisual(bombero) game.addVisual(bombero)})
 			game.onCollideDo(bombero,({obj=>obj.choca()}))
 			gameOver.salirDelJuego()
+			gameOver.volverAlInicio()
 		}
 	}
 	
@@ -57,6 +64,15 @@ object juego {
 			mapa.fuegosEnMapa().last().aparecer()
 		} else {
 			self.aparecerFuego()
+		}
+	}
+	method aparecerObstaculo() {
+		var pos = game.at(1.randomUpTo(12).truncate(0),1.randomUpTo(12).truncate(0))
+		if (not mapa.hayObstaculo(pos) and not mapa.hayFuego(pos)) {
+			mapa.agregarObstaculo(new Obstaculo(position = pos))
+			mapa.objetosEnMapa().last().aparecer()
+		} else {
+			self.aparecerObstaculo()
 		}
 	}
 	method aumentarFuego() { cantidadFuego++ }
@@ -93,26 +109,27 @@ object pantallaDeInicio {
 }
 
 object instrucciones {
-	var seMuestra = false
+	var seMuestra = true
 	const property position = game.origin()
 	const property image = "instrucciones.jpg"
 	
 	method mostrarIntrucciones() {
-		seMuestra = true
-		game.addVisual(self)
 		if(seMuestra)
-			game.schedule(1000, { game.removeVisual(self)
+			seMuestra = true
+			game.addVisual(self)
+			game.schedule(3000, { game.removeVisual(self)
 			juego.empezar()	})
 	}
 }
 
 object pantallaPierdeUnaVida {
 	const property position= game.origin()
-	const property image= "fondoRojo.png"
-	
+	var property image = "blank.png"
+
 	method sePoneLaPantallaRoja() {
-		game.addVisual(self)
-		game.schedule(200,{game.removeVisual(self)})
+		image = "fondoRojo.png"
+		mapa.objetosEnMapa().forEach({o=>o.cambiarImagen()})
+		game.schedule(200,{image = "blank.png"})
 	}
 	
 }
@@ -130,11 +147,11 @@ class Fin {
 		self.musica()
 		self.mensajeBombero()
 		self.salirDelJuego()
-		self.volverAlinicio()
+		self.volverAlInicio()
 	}
 	
 	method salirDelJuego() {keyboard.q().onPressDo({game.stop()})}
-	method volverAlinicio() {keyboard.del().onPressDo({self.restartGame()})}
+	method volverAlInicio() {keyboard.backspace().onPressDo({self.restartGame()})}
 	method restartGame() {
 		game.clear()
 		mapa.borrarTodo()

@@ -3,6 +3,7 @@ import personajes.*
 import juego.*
 import mapa.*
 import numeros.*
+import direcciones.*
 
 
 object agua {
@@ -13,7 +14,7 @@ object agua {
 		game.onCollideDo(self,{fuego=>fuego.mojarse() })
 	}
 	method aparecer(pos, dir) {
-		position = dir.aguaPosition(pos)
+		position = dir.direccionPosition(pos)
 		image = dir.imageAgua()
 		game.addVisual(self)
 		game.sound("chorroAgua.mp3").play()
@@ -48,12 +49,28 @@ class Fuego {
 }
 
 class Obstaculo {
-	var property image="stone.png"
+	var property image="obstaculo.png"
 	var property position
+	const direcciones = [norte,sur,este,oeste]
 	
-	method aparecer() {}
+	method aparecer() {
+		game.addVisual(self)
+	}
 	method mojarse() {}
 	method choca() {}
+	method expandir() {
+		var random = 0.randomUpTo(4).truncate(0)
+		var coordenadas
+		
+		if (random != 4) {
+			coordenadas = direcciones.get(random).direccionPosition(self.position())
+		} else { self.expandir() }
+		return coordenadas
+	}
+	method cambiarImagen() {
+		image="obstaculoRojo.png"
+		game.schedule(200, {image="obstaculo.png"})
+	}
 }
 object reloj {
 	  var property tiempo=40
@@ -62,7 +79,7 @@ object reloj {
 	  	
 		tiempo=0.max(tiempo-1)
 	    new Numero(posUnidad = 4,posDecena=3,posY=12).informarNumero(self.tiempo())
-		if (tiempo==35) {
+		if (tiempo==25) {
 			mapa.agregarNuevosObstaculos()
 		}
 	    if (tiempo==0) {

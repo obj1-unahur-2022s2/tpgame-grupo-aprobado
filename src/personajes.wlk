@@ -7,11 +7,11 @@ import mapa.*
 
 
 object bombero {
-	var property image = "bomberoEste.png"
-	var property position = game.at(1,1)
+	var property image = "bomberoSur.png"
+	var property position = game.at(6,11)
 	var property puntaje=0
 	var property vidas = 3
-	var property direccion = este
+	var property direccion = sur
 	
 	
 	method posicion() = position
@@ -51,5 +51,6 @@ object bombero {
 	method lanzarAgua() {
 		agua.aparecer(position, direccion)
 	}
+	method cambiarImagen() {}
 }
 
