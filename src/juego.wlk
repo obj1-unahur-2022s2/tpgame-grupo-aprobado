@@ -17,7 +17,7 @@ object juego {
 		game.boardGround("fondo.png")
 		game.addVisualIn(pantallaDeInicio,game.at(0,0))
 		pantallaDeInicio.iniciarAnimacion()
-		keyboard.enter().onPressDo({self.empezar()})
+		keyboard.enter().onPressDo({instrucciones.mostrarIntrucciones()})
 		
 	}
 	
@@ -89,6 +89,20 @@ object pantallaDeInicio {
 			return "inicio.png"
 		else
 			return "inicio1.jpg"
+	}
+}
+
+object instrucciones {
+	var seMuestra = false
+	const property position = game.origin()
+	const property image = "instrucciones.jpg"
+	
+	method mostrarIntrucciones() {
+		seMuestra = true
+		game.addVisual(self)
+		if(seMuestra)
+			game.schedule(1000, { game.removeVisual(self)
+			juego.empezar()	})
 	}
 }
 
