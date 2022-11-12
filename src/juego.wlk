@@ -161,9 +161,9 @@ class Fin {
 		juego.cantidadFuego(0)
 		reloj.tiempo(40)
 		bombero.vidas(3)
-		bombero.position(game.at(1,1))
+		bombero.position(game.at(6,11))
 		bombero.puntaje(0)
-		bombero.image("bomberoEste.png")
+		bombero.image("bomberoSur.png")
 		bombero.direccion(este)
 		juego.iniciar()
 		}
