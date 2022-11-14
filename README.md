@@ -17,7 +17,7 @@
 
 ## Reglas de Juego / Instrucciones
 
-El jugador deberá **sumar 20 puntos** en 40 segundos para ganar la partida.
+El jugador deberá **sumar 15 puntos** en 40 segundos para ganar la partida.
 
 Cada fuego apagado sumará 1 punto.
 
